@@ -6,6 +6,12 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOGFILE"
 }
 
+cleanup_log(){
+    if [ -f "${LOGFILE}" ]; then
+        tail -n 168 "${LOGFILE}" > "${LOGFILE}.tmp" && mv "${LOGFILE}.tmp" "$LOGFILE"
+    fi
+}
+
 stopOneDrive() {
 TIME="5"
 log "⏳ Waiting ${TIME} minutes for synchronization"
@@ -34,7 +40,9 @@ open -a "OneDrive"
 if pgrep -x "OneDrive" >/dev/null; then
     log "⚠️  OneDrive is already running."
     stopOneDrive
+    cleanup_log
 fi
 
 startOneDrive
 stopOneDrive
+cleanup_log
