@@ -29,6 +29,7 @@ else
     log "ℹ️  OneDrive was already stopped before the timeout."
 fi
 log "🎯 Cycle completed"
+cleanup_log
 exit 0
 }
 
@@ -40,9 +41,7 @@ open -a "OneDrive"
 if pgrep -x "OneDrive" >/dev/null; then
     log "⚠️  OneDrive is already running."
     stopOneDrive
-    cleanup_log
 fi
 
 startOneDrive
 stopOneDrive
-cleanup_log
