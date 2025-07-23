@@ -20,9 +20,9 @@ if pgrep -x "OneDrive" >/dev/null; then
     # Edit the variable below if you have more than 2 OneDrive accounts running.
     NUMBER_OF_ACCOUNTS=2
     log "🔄 Stopping all OneDrive instances"
-    for i in $(seq 1 "$NUMBER_OF_ACCOUNTS"); do
-        log "🛑 Stopping OneDrive-$i"
+    while pgrep -i "OneDrive" > /dev/null; do
         osascript -e "quit app \"OneDrive\""
+	sleep 3 
     done
     log "✅ All instances have been processed"
 else
